@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 
-function ExpensesForm() {
+function ExpensesForm({onAddExpense}) {
 
     const [title,setTitle]=useState("");
     const[amount,setAmount]=useState("");
@@ -10,16 +10,17 @@ function ExpensesForm() {
         e.preventDefault();
 
        const expensesData={
+        id:Math.random(),
         title,
         amount,
         date
     };
-    console.log(expensesData);
+    onAddExpense(expensesData);
 
     setTitle("");
     setAmount("");
     setDate("");
-    }
+    };
     return(
         <div style={{marginTop:"20px", textAlign:"center" }}>
             <form onSubmit={handlesumbit}>

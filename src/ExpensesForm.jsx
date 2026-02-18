@@ -12,7 +12,7 @@ function ExpensesForm({onAddExpense}) {
        const expensesData={
         id:Math.random(),
         title,
-        amount,
+        amount:Number(amount),
         date
     };
     onAddExpense(expensesData);

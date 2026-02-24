@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Header from './Header';
 import './App.css'
 import ExpensesForm from './ExpensesForm';
@@ -6,9 +6,17 @@ import ExpensesList from './ExpensesList';
 import ExpenseFilter from './ExpenseFilter';
 
 function App() {
-
-    const [expenses, setExpenses] = useState([]);
+  
+    const [expenses, setExpenses] = useState(()=>{
+        const SaveData = localStorage.getItem("expenses");
+        return SaveData ? JSON.parse(SaveData):[];
+    });
     const [filteredyear, setFilteredyear] = useState("2026");
+
+
+     useEffect(()=>{
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+    },[expenses])
 
     const addExpenseHandler = (expense) => {
         setExpenses((prevExpenses) => [...prevExpenses, expense]);
@@ -38,6 +46,12 @@ function App() {
         <div>
             <Header />
             <h3>Total Amount: ₹{totalamount}</h3>
+            <button onClick={() => {
+                  localStorage.removeItem("expenses");
+                   setExpenses([]);
+                   }}>
+                       Clear All
+                 </button>
 
             <ExpensesForm onAddExpense={addExpenseHandler} />
 
